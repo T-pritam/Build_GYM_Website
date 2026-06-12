@@ -1,26 +1,248 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────
+   Elite Noir / Holographic — design tokens (source of truth)
+   Tailwind v4: @theme emits each token as a CSS variable on
+   :root AND a utility class (bg-background, text-primary…).
+   ───────────────────────────────────────────────────────── */
+@theme {
+  /* Canvas / backgrounds */
+  --color-background: #080608;
+  --color-background-alt: #100d10;
+  --color-surface: #151215;
+  --color-surface-low: #1e1b1d;
+  --color-surface-2: #221f21;
+  --color-surface-3: #2c292c;
+  --color-surface-bright: #3c383b;
+
+  /* Frosted glass */
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-dim: rgba(255, 255, 255, 0.03);
+  --color-glass-bright: rgba(255, 255, 255, 0.08);
+
+  /* Accent — holographic purple → cyan */
+  --color-primary: #7f2982;
+  --color-primary-bright: #7c3aed;
+  --color-primary-neon: #7f29ff;
+  --color-primary-light: #a78bfa;
+  --color-primary-deep: #5a005f;
+  --color-cyan: #06b6d4;
+  --color-cyan-neon: #00f2ff;
+
+  /* Translucent accent washes */
+  --color-primary-soft: rgba(127, 41, 130, 0.15);
+  --color-primary-border: rgba(127, 41, 130, 0.4);
+  --color-primary-glow: rgba(127, 41, 130, 0.3);
+  --color-primary-neon-glow: rgba(127, 41, 255, 0.8);
+
+  /* Text */
+  --color-text-primary: #e8e0e4;
+  --color-text-secondary: #d4c1cf;
+  --color-text-muted: #9d8c99;
+  --color-text-dim: #50434e;
+
+  /* Status */
+  --color-success: #4caf50;
+  --color-error: #f44336;
+  --color-warning: #ffc107;
+
+  /* Borders & overlays */
+  --color-border-base: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
+  --color-overlay: rgba(8, 6, 8, 0.8);
+
+  /* Fonts (variables injected by next/font in layout.tsx) */
+  --font-display: var(--font-anybody);
+  --font-body: var(--font-hanken);
+  --font-editorial: var(--font-garamond);
+
+  --radius-card: 22px;
+}
+
+/* Gradients (exact brand stops) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gradient-holographic: linear-gradient(100deg, #7f2982, #00f2ff, #7f2982);
+  --gradient-violet-cyan: linear-gradient(92deg, #7c3aed, #06b6d4);
+  --gradient-purple-wash: radial-gradient(
+    ellipse at center,
+    rgba(127, 41, 130, 0.3),
+    transparent 70%
+  );
+  --gradient-divider: linear-gradient(90deg, transparent, #7f2982, transparent);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ───────────────────────────── base ───────────────────────────── */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-primary-bright);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-neon);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Grain/noise overlay on the body */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ──────────────────────── brand utilities ──────────────────────── */
+
+.font-display {
+  font-family: var(--font-anybody), sans-serif;
+}
+.font-editorial {
+  font-family: var(--font-garamond), serif;
+}
+
+.text-gradient {
+  background: var(--gradient-violet-cyan);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  font-family: var(--font-garamond), serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--color-text-secondary);
+}
+
+.label {
+  font-family: var(--font-hanken), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.glass-card {
+  background: var(--color-glass);
+  border: 1px solid var(--color-border-base);
+  border-radius: 22px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.divider-sheen {
+  height: 1px;
+  background: var(--gradient-divider);
+}
+
+.purple-wash {
+  background: var(--gradient-purple-wash);
+}
+
+/* Holographic CTA — animated gradient + neon glow */
+.btn-holo {
+  position: relative;
+  background: var(--gradient-holographic);
+  background-size: 250% 100%;
+  animation: holo-slide 6s linear infinite;
+  box-shadow: 0 0 24px -6px var(--color-primary-neon-glow);
+  color: #fff;
+  transition: box-shadow 0.35s ease;
+}
+.btn-holo:hover {
+  animation-duration: 2.2s;
+  box-shadow: 0 0 42px -4px var(--color-primary-neon-glow);
+}
+
+@keyframes holo-slide {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 250% 50%;
+  }
+}
+
+.btn-ghost {
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+}
+.btn-ghost:hover {
+  border-color: var(--color-primary-neon);
+  box-shadow: 0 0 24px -8px var(--color-primary-neon-glow);
+  background: var(--color-glass-dim);
+}
+
+/* Activity card cyan underline sweep */
+.underline-sweep {
+  position: relative;
+}
+.underline-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-cyan-neon), var(--color-primary-neon));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.group:hover .underline-sweep::after {
+  transform: scaleX(1);
+}
+
+/* Footer marquee */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* split-text helpers */
+.split-line {
+  display: block;
+  overflow: clip;
+}
+.split-word {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-holo,
+  .marquee-track {
+    animation: none;
+  }
 }
