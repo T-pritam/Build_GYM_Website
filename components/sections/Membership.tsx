@@ -6,7 +6,7 @@ import { splitWords } from "@/lib/split";
 import { prefersReducedMotion } from "@/lib/useReducedMotion";
 import { scrollToAnchor } from "@/lib/lenis";
 import MagneticButton from "@/components/ui/MagneticButton";
-import AccentScene from "@/components/three/AccentScene";
+import { sceneBus } from "@/lib/sceneBus";
 
 export default function Membership() {
   const section = useRef<HTMLElement>(null);
@@ -15,6 +15,16 @@ export default function Membership() {
   useEffect(() => {
     const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
+      // feeds the SceneRail plates accent (visible while this section is on screen)
+      ScrollTrigger.create({
+        trigger: section.current,
+        start: "top 75%",
+        end: "bottom 35%",
+        onUpdate: (self) => {
+          sceneBus.membership = self.progress;
+        },
+      });
+
       const el = headline.current;
       if (!el) return;
 
@@ -74,8 +84,7 @@ export default function Membership() {
 
   return (
     <section ref={section} className="relative overflow-hidden py-32 lg:py-44">
-      {/* decorative slow-spinning equipment — kept fully inside the viewport */}
-      <AccentScene className="pointer-events-none absolute right-[4%] top-8 hidden h-[400px] w-[400px] opacity-70 lg:block" />
+      {/* the SceneRail plates accent floats top-right while this section is in view */}
       <div className="purple-wash absolute bottom-0 left-1/2 h-[60vh] w-screen -translate-x-1/2" />
 
       <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-10">

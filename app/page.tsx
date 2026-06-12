@@ -2,7 +2,9 @@ import SmoothScroll from "@/lib/lenis";
 import Preloader from "@/components/Preloader";
 import Nav from "@/components/Nav";
 import ScrollProgress from "@/components/ScrollProgress";
-import AmbientParticles from "@/components/three/AmbientParticles";
+import CursorGlow from "@/components/CursorGlow";
+import SceneRail from "@/components/three/SceneRail";
+import HoverDistortion from "@/components/three/HoverDistortion";
 import Hero from "@/components/sections/Hero";
 import Trainers from "@/components/sections/Trainers";
 import AppShowcase from "@/components/sections/AppShowcase";
@@ -18,7 +20,9 @@ export default function Home() {
     <>
       <SmoothScroll />
       <Preloader />
-      <AmbientParticles />
+      <SceneRail />
+      <CursorGlow />
+      <HoverDistortion />
       <ScrollProgress />
       <Nav />
       <main className="relative z-10">

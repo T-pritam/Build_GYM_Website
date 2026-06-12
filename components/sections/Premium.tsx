@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/useReducedMotion";
 import SplitHeading from "@/components/ui/SplitHeading";
-import PremiumScene from "@/components/three/PremiumScene";
+import { sceneBus } from "@/lib/sceneBus";
 
 const BLOCKS = [
   {
@@ -31,7 +31,6 @@ const BLOCKS = [
  */
 export default function Premium() {
   const section = useRef<HTMLElement>(null);
-  const progressRef = useRef(0);
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -41,7 +40,7 @@ export default function Premium() {
         start: "top center",
         end: "bottom center",
         onUpdate: (self) => {
-          progressRef.current = self.progress;
+          sceneBus.premium = self.progress;
         },
       });
 
@@ -66,13 +65,10 @@ export default function Premium() {
     <section ref={section} id="premium" className="relative">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-2">
-          {/* sticky 3D column */}
-          <div className="relative h-[42vh] lg:h-auto">
-            <div className="purple-wash lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
-              <div className="relative h-[42vh] w-full lg:h-[70vh]">
-                <PremiumScene progressRef={progressRef} />
-              </div>
-            </div>
+          {/* sticky column — visual anchor for the SceneRail kettlebell,
+              which floats over this space while the blocks scroll */}
+          <div className="relative hidden lg:block">
+            <div className="purple-wash lg:sticky lg:top-0 lg:h-screen" />
           </div>
 
           {/* scrolling feature blocks */}

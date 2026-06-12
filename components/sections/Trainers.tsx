@@ -172,12 +172,13 @@ export default function Trainers() {
               >
                 {/* photo with initials + gradient wash behind as fallback */}
                 <div
+                  data-distort
                   className={`relative flex aspect-[4/4.6] items-end justify-start overflow-hidden rounded-2xl bg-gradient-to-br ${t.hue} to-surface-low`}
                 >
                   <span className="font-display absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl font-extrabold uppercase tracking-[0.08em] text-glass-bright">
                     {t.initials}
                   </span>
-                  <div data-trainer-photo className="absolute -inset-x-[6%] inset-y-0">
+                  <div data-trainer-photo data-distort-mount className="absolute -inset-x-[6%] inset-y-0">
                     {/* eslint-disable-next-line @next/next/no-img-element -- Unsplash CDN already serves optimized variants; avoids proxying remote images through next/image */}
                     <img
                       src={t.photo}

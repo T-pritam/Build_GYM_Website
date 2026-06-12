@@ -6,7 +6,7 @@ import { splitWords } from "@/lib/split";
 import { prefersReducedMotion } from "@/lib/useReducedMotion";
 import { scrollToAnchor } from "@/lib/lenis";
 import { PRELOADER_DONE_EVENT } from "@/components/Preloader";
-import HeroScene from "@/components/three/HeroScene";
+import { sceneBus } from "@/lib/sceneBus";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function Hero() {
@@ -14,7 +14,6 @@ export default function Hero() {
   const content = useRef<HTMLDivElement>(null);
   const line1 = useRef<HTMLSpanElement>(null);
   const line2 = useRef<HTMLSpanElement>(null);
-  const progressRef = useRef(0);
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -64,7 +63,7 @@ export default function Hero() {
           pin: true,
           scrub: 0.6,
           onUpdate: (self) => {
-            progressRef.current = self.progress;
+            sceneBus.hero = self.progress;
           },
         });
         gsap.to(content.current, {
@@ -86,10 +85,9 @@ export default function Hero() {
 
   return (
     <section ref={section} id="top" className="relative h-screen overflow-hidden">
-      {/* radial brand wash behind the object */}
+      {/* radial brand wash behind the object (the 3D dumbbell lives on the
+          site-wide SceneRail canvas and is centered here while pinned) */}
       <div className="purple-wash absolute inset-0 scale-125" />
-
-      <HeroScene progressRef={progressRef} />
 
       <div
         ref={content}

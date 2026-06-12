@@ -84,18 +84,29 @@ CC-Attribution models must be credited. Fill in `CREDITS.md` and
 `app/credits/page.tsx` (linked from the footer as "3D models: credits") with
 the exact lines from each model's source page.
 
-## Performance
+## 3D architecture & performance
 
-- `dpr` capped at `[1, 2]`; canvases lazy-mount via IntersectionObserver and
-  set `frameloop="never"` while off-screen (`components/three/LazyCanvas.tsx`).
-- Bloom uses `mipmapBlur` with no multisampling; one shared lighting rig.
+- **One WebGL context for the whole site** (`components/three/SceneRail.tsx`):
+  a single fixed canvas hosts the ambient dust and a "traveler" object that
+  hands off between sections as you scroll — hero dumbbell → docked
+  bottom-right while browsing → kettlebell beside the Premium feature blocks
+  → plates accent in the membership closer → fades out. Sections feed their
+  ScrollTrigger progress through `lib/sceneBus.ts` (a plain mutable object —
+  zero React re-renders on scroll). This replaced four separate canvases
+  (hero/premium/accent/particles), three environment-map copies, and two
+  bloom passes; glow now comes from the purple/cyan rim lights alone.
+- **Hover distortion** (`components/three/HoverDistortion.tsx`): one extra
+  renderer created lazily on first hover and re-parented into whichever
+  trainer card is hovered; at most one card-sized texture on the GPU,
+  disposed on leave; rAF runs only while the effect is visible.
+- **Cursor glow** (`components/CursorGlow.tsx`): pure CSS transforms on two
+  fixed divs, no WebGL. Skipped on touch devices.
+- `dpr` capped at `[1, 1.75]`; dust is ~180 unlit points (110 on mobile).
 - Trainers section: pinned horizontal scroll on desktop, native snap swipe
   carousel on mobile (no pin).
-- `prefers-reduced-motion`: pins/scrubs/parallax/marquee/idle-rotation are all
-  disabled; reveals fall back to simple fades. Lenis is not initialized.
-- The site-wide particle layer (`components/three/AmbientParticles.tsx`) is
-  deliberately tiny: ~180 unlit points, dpr locked to 1, no postprocessing,
-  fewer particles on mobile, skipped entirely under reduced motion.
+- `prefers-reduced-motion`: pins/scrubs/parallax/marquee/3D/cursor effects
+  are all disabled; reveals fall back to simple fades. Lenis is not
+  initialized.
 
 ## Wiring the contact form to a real email service
 
@@ -129,10 +140,10 @@ way — swap the send call.)
 ```
 app/                  layout (fonts/meta), page, globals.css (design tokens), api/contact, /credits
 components/sections/  Hero, Trainers, AppShowcase, Activities, Premium, Cafe, Membership, Contact
-components/three/     LazyCanvas, Stage (lights+bloom), NormalizedModel, ModelBoundary, Procedural, scenes
+components/three/     SceneRail (single site-wide canvas), HoverDistortion, NormalizedModel, ModelBoundary, Procedural
 components/ui/        SplitHeading, MagneticButton, Counter
-components/           Preloader, Nav, Footer
-lib/                  gsap.ts, lenis.tsx, assets.ts (model manifest), split.ts, useReducedMotion.ts
+components/           Preloader, Nav, Footer, ScrollProgress, CursorGlow
+lib/                  gsap.ts, lenis.tsx, assets.ts (model manifest), sceneBus.ts, split.ts, useReducedMotion.ts
 ```
 
 ## Missing models
