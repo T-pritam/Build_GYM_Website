@@ -52,9 +52,10 @@ export default function Footer() {
             e.preventDefault();
             scrollToAnchor("#top");
           }}
-          className="font-display text-lg font-extrabold uppercase tracking-[0.08em]"
+          className="shrink-0"
         >
-          BUILD<span className="text-gradient">.</span>
+          {/* eslint-disable-next-line @next/next/no-img-element -- small static brand asset, no optimization needed */}
+          <img src="/brand/logo-horizontal.png" alt="MAISON de BUILD" className="h-6 w-auto" />
         </a>
 
         <ul className="flex flex-wrap items-center justify-center gap-6">

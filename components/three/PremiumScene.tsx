@@ -48,7 +48,7 @@ function PremiumObject({ progressRef, reduced }: { progressRef: RefObject<number
 export default function PremiumScene({ progressRef }: { progressRef: RefObject<number> }) {
   const reduced = useReducedMotion();
   return (
-    <LazyCanvas className="absolute inset-0" camera={{ position: [0, 0.2, 5], fov: 40 }}>
+    <LazyCanvas feather className="absolute inset-0" camera={{ position: [0, 0.2, 5], fov: 40 }}>
       <Stage shadowY={-1.5}>
         <PremiumObject progressRef={progressRef} reduced={reduced} />
       </Stage>

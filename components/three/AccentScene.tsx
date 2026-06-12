@@ -33,7 +33,7 @@ function AccentObject({ reduced }: { reduced: boolean }) {
 export default function AccentScene({ className }: { className?: string }) {
   const reduced = useReducedMotion();
   return (
-    <LazyCanvas className={className} camera={{ position: [0, 0.4, 5.4], fov: 38 }}>
+    <LazyCanvas feather className={className} camera={{ position: [0, 0.4, 5.4], fov: 38 }}>
       <Stage shadowY={-1.4} bloom={false}>
         <AccentObject reduced={reduced} />
       </Stage>

@@ -28,6 +28,20 @@ npm run build    # production build
 No other runtime dependencies — the split-text utility, magnetic buttons,
 phone mockup, preloader, and marquee are all hand-rolled.
 
+Trainer and activity photos are hotlinked from the Unsplash CDN (plain
+`<img loading="lazy">` with size/format params — the CDN serves optimized
+variants, so they're not proxied through `next/image`). Every image has an
+`onError` fallback to the branded gradient placeholder, so the design holds
+up offline or if a photo is ever removed.
+
+## Brand assets
+
+`public/brand/` holds the processed white "MAISON de BUILD" logo set
+(trimmed, resized, transparent): `logo-horizontal.png` (nav + footer),
+`logo-mark.png` (preloader; also the source of `app/icon.png`, the favicon),
+plus `logo-stacked.png` and `logo-wordmark.png` as spares. The original
+`Logo Files/` folder is no longer referenced and can be deleted.
+
 ## 3D models
 
 Drop GLB files into `public/models/` with these exact names (the manifest is
@@ -79,6 +93,9 @@ the exact lines from each model's source page.
   carousel on mobile (no pin).
 - `prefers-reduced-motion`: pins/scrubs/parallax/marquee/idle-rotation are all
   disabled; reveals fall back to simple fades. Lenis is not initialized.
+- The site-wide particle layer (`components/three/AmbientParticles.tsx`) is
+  deliberately tiny: ~180 unlit points, dpr locked to 1, no postprocessing,
+  fewer particles on mobile, skipped entirely under reduced motion.
 
 ## Wiring the contact form to a real email service
 

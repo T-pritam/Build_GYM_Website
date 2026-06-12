@@ -47,12 +47,13 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <a
-          href="#top"
-          onClick={(e) => go(e, "#top")}
-          className="font-display text-xl font-extrabold uppercase tracking-[0.08em]"
-        >
-          BUILD<span className="text-gradient">.</span>
+        <a href="#top" onClick={(e) => go(e, "#top")} className="shrink-0">
+          {/* eslint-disable-next-line @next/next/no-img-element -- small static brand asset, no optimization needed */}
+          <img
+            src="/brand/logo-horizontal.png"
+            alt="MAISON de BUILD"
+            className="h-6 w-auto sm:h-7"
+          />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">

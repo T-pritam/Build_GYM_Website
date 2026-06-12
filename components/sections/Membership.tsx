@@ -74,8 +74,8 @@ export default function Membership() {
 
   return (
     <section ref={section} className="relative overflow-hidden py-32 lg:py-44">
-      {/* decorative slow-spinning equipment */}
-      <AccentScene className="pointer-events-none absolute -right-[10%] top-0 hidden h-[440px] w-[440px] opacity-60 lg:block" />
+      {/* decorative slow-spinning equipment — kept fully inside the viewport */}
+      <AccentScene className="pointer-events-none absolute right-[4%] top-8 hidden h-[400px] w-[400px] opacity-70 lg:block" />
       <div className="purple-wash absolute bottom-0 left-1/2 h-[60vh] w-screen -translate-x-1/2" />
 
       <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-10">

@@ -28,6 +28,9 @@
   --color-primary-deep: #5a005f;
   --color-cyan: #06b6d4;
   --color-cyan-neon: #00f2ff;
+  /* aliases so accent-cyan utilities resolve (used by gradients/tiles) */
+  --color-accent-cyan: #06b6d4;
+  --color-accent-cyan-neon: #00f2ff;
 
   /* Translucent accent washes */
   --color-primary-soft: rgba(127, 41, 130, 0.15);

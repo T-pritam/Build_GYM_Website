@@ -62,7 +62,7 @@ export default function Cafe() {
             <div>
               <p className="label text-[10px] text-text-muted">Your balance</p>
               <p className="font-display text-2xl font-extrabold">
-                <Counter to={2450} className="text-gradient" /> <span className="text-xs uppercase text-text-muted">coins</span>
+                <Counter to={2690} className="text-gradient" /> <span className="text-xs uppercase text-text-muted">coins</span>
               </p>
             </div>
           </div>
