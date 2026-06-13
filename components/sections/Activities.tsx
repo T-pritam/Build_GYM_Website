@@ -41,6 +41,25 @@ export default function Activities() {
           scrollTrigger: { trigger: section.current, start: "top 70%", once: true },
         }
       );
+
+      // gentle image parallax — photos drift up as the section scrolls past,
+      // adding depth without moving the cards themselves
+      if (!reduced) {
+        gsap.fromTo(
+          "[data-act-img]",
+          { yPercent: -8 },
+          {
+            yPercent: 8,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      }
     }, section);
     return () => ctx.revert();
   }, []);
@@ -68,17 +87,21 @@ export default function Activities() {
                 a.big ? "md:col-span-2 lg:col-span-2" : ""
               }`}
             >
-              {/* photo layer — dimmed, brightens + zooms on hover */}
-              {/* eslint-disable-next-line @next/next/no-img-element -- Unsplash CDN already serves optimized variants; avoids proxying remote images through next/image */}
-              <img
-                src={a.photo}
-                alt={a.name}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover opacity-35 saturate-[0.7] transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-60 group-hover:saturate-100"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
+              {/* photo layer — parallax drift on scroll (wrapper), dimmed,
+                  brightens + zooms on hover (img). Extra vertical bleed so the
+                  drift never exposes an edge. */}
+              <div data-act-img className="absolute -inset-y-[14%] inset-x-0 will-change-transform">
+                {/* eslint-disable-next-line @next/next/no-img-element -- Unsplash CDN already serves optimized variants; avoids proxying remote images through next/image */}
+                <img
+                  src={a.photo}
+                  alt={a.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover opacity-35 saturate-[0.7] transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-60 group-hover:saturate-100"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              </div>
               {/* legibility gradient */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(8,6,8,0.92)] via-[rgba(8,6,8,0.35)] to-[rgba(8,6,8,0.15)]" />
 

@@ -7,6 +7,7 @@ import { Environment } from "@react-three/drei";
 import { easing } from "maath";
 import ModelBoundary from "./ModelBoundary";
 import NormalizedModel from "./NormalizedModel";
+import HeroAtmosphere from "./HeroAtmosphere";
 import {
   ProceduralDumbbell,
   ProceduralKettlebell,
@@ -268,6 +269,7 @@ export default function SceneRail() {
         <directionalLight position={[4, -1, -3]} intensity={9} color="#00f2ff" />
         <directionalLight position={[0, 3, 5]} intensity={1.1} color="#e8e0e4" />
         <Dust />
+        <HeroAtmosphere />
         <Traveler />
       </Canvas>
     </div>

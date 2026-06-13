@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/useReducedMotion";
 import SplitHeading from "@/components/ui/SplitHeading";
+import DrawLine from "@/components/ui/DrawLine";
 import { sceneBus } from "@/lib/sceneBus";
 
 const BLOCKS = [
@@ -90,7 +91,7 @@ export default function Premium() {
                 <h3 className="font-display mt-4 text-2xl font-bold uppercase tracking-[0.045em] sm:text-3xl">
                   {b.title}
                 </h3>
-                <div className="divider-sheen my-5 w-32" />
+                <DrawLine className="my-5 block h-0.5 w-32" width={128} />
                 <p className="text-text-secondary">{b.body}</p>
               </article>
             ))}

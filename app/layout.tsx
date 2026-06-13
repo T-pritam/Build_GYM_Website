@@ -17,7 +17,7 @@ const hanken = Hanken_Grotesk({
 const garamond = EB_Garamond({
   variable: "--font-garamond",
   subsets: ["latin"],
-  style: ["italic"],
+  style: ["normal", "italic"],
   weight: ["400", "500"],
 });
 

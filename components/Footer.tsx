@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { scrollToAnchor } from "@/lib/lenis";
+import Wordmark from "@/components/ui/Wordmark";
 
 const ACTIVITIES = [
   "Weight Training",
@@ -52,10 +53,10 @@ export default function Footer() {
             e.preventDefault();
             scrollToAnchor("#top");
           }}
+          aria-label="MAISON de BUILD — home"
           className="shrink-0"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element -- small static brand asset, no optimization needed */}
-          <img src="/brand/logo-horizontal.png" alt="MAISON de BUILD" className="h-6 w-auto" />
+          <Wordmark className="text-lg text-text-primary" />
         </a>
 
         <ul className="flex flex-wrap items-center justify-center gap-6">

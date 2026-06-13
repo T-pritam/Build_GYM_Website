@@ -6,11 +6,11 @@
  * (the site never crashes without models).
  */
 export const MODELS = {
-  /** Hero — most iconic standalone piece. ~4.2MB */
+  /** Hero — most iconic standalone piece. */
   hero: "/models/dumbbell.glb",
-  /** Premium / Smart Access section. ~3.4MB */
+  /** Premium / Smart Access section. */
   premium: "/models/kettlebell.glb",
-  /** Decorative accent in the membership closer. ~2.2MB */
+  /** Decorative accent in the membership closer. */
   accent: "/models/weight_lifting_set.glb",
 } as const;
 

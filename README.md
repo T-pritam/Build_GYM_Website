@@ -36,11 +36,12 @@ up offline or if a photo is ever removed.
 
 ## Brand assets
 
-`public/brand/` holds the processed white "MAISON de BUILD" logo set
-(trimmed, resized, transparent): `logo-horizontal.png` (nav + footer),
-`logo-mark.png` (preloader; also the source of `app/icon.png`, the favicon),
-plus `logo-stacked.png` and `logo-wordmark.png` as spares. The original
-`Logo Files/` folder is no longer referenced and can be deleted.
+`public/brand/brandmark.svg` is the MAISON de BUILD crossed-dumbbell mark as
+clean vector (converted losslessly from the brand Illustrator PDF). The nav
+renders it as a small rotating 3D emblem (`components/three/EmblemLogo.tsx`,
+extruded from the SVG) beside a live-text wordmark
+(`components/ui/Wordmark.tsx`, EB Garamond) — no flat logo image is used, so
+the lockup stays crisp at any size. `app/icon.png` is the favicon.
 
 ## 3D models
 
@@ -58,7 +59,7 @@ simplification — silhouettes untouched) and textures resized 1024→512,
 which is still at/above screen density for the sizes these objects render
 at. That cut texture GPU/RAM use from ~84 MB to ~21 MB and downloads from
 9.8 MB to 2.8 MB with no visible difference. Untouched originals live in
-`models_src/`. To re-run after swapping a model:
+`models_src/` (gitignored, local-only backup). To re-run after swapping a model:
 
 ```bash
 npx @gltf-transform/cli optimize models_src/model.glb public/models/model.glb \

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { scrollToAnchor } from "@/lib/lenis";
+import EmblemLogo from "@/components/three/EmblemLogo";
+import Wordmark from "@/components/ui/Wordmark";
 
 const LINKS = [
   { label: "Trainers", href: "#trainers" },
@@ -47,13 +49,14 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <a href="#top" onClick={(e) => go(e, "#top")} className="shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element -- small static brand asset, no optimization needed */}
-          <img
-            src="/brand/logo-horizontal.png"
-            alt="MAISON de BUILD"
-            className="h-6 w-auto sm:h-7"
-          />
+        <a
+          href="#top"
+          onClick={(e) => go(e, "#top")}
+          aria-label="MAISON de BUILD — home"
+          className="flex shrink-0 items-center gap-2.5"
+        >
+          <EmblemLogo className="h-9 w-9 sm:h-10 sm:w-10" />
+          <Wordmark className="text-base text-text-primary sm:text-lg" />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
