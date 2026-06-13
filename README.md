@@ -49,9 +49,21 @@ Drop GLB files into `public/models/` with these exact names (the manifest is
 
 | File | Section | Notes |
 | --- | --- | --- |
-| `public/models/dumbbell.glb` | Hero | currently ~4.2 MB |
-| `public/models/kettlebell.glb` | Premium Access | currently ~3.4 MB |
-| `public/models/weight_lifting_set.glb` | Membership accent | currently ~2.2 MB |
+| `public/models/dumbbell.glb` | Hero | 1.4 MB (optimized from 4.2 MB) |
+| `public/models/kettlebell.glb` | Premium Access | 0.8 MB (optimized from 3.4 MB) |
+| `public/models/weight_lifting_set.glb` | Membership accent | 0.6 MB (optimized from 2.2 MB) |
+
+The shipped GLBs are optimized: Draco-compressed geometry (no mesh
+simplification — silhouettes untouched) and textures resized 1024→512,
+which is still at/above screen density for the sizes these objects render
+at. That cut texture GPU/RAM use from ~84 MB to ~21 MB and downloads from
+9.8 MB to 2.8 MB with no visible difference. Untouched originals live in
+`models_src/`. To re-run after swapping a model:
+
+```bash
+npx @gltf-transform/cli optimize models_src/model.glb public/models/model.glb \
+  --compress draco --texture-size 512 --simplify false
+```
 
 All three models you provided were found and wired up — none were skipped
 (each is well under the 15 MB ceiling). Your original nested folders
