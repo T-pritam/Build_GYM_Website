@@ -191,6 +191,14 @@ function Traveler() {
       pose = { ...dock("plates"), s: 0 };
     }
 
+    // Mobile: the traveler is the hero piece only. A narrow screen has no
+    // side-column room, so once the hero is passed we retire the object
+    // (ambient dust stays) — guarantees text legibility and lightens phone
+    // GPU. Desktop keeps the full cross-section handoff untouched.
+    if (!desktop && b.hero >= 1) {
+      pose.s = 0;
+    }
+
     easing.damp3(g.position, [pose.x, pose.y, 0], 0.5, delta);
     easing.damp3(g.scale, [Math.max(pose.s, 0.001), Math.max(pose.s, 0.001), Math.max(pose.s, 0.001)], 0.45, delta);
 

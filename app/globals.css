@@ -87,6 +87,12 @@ html.lenis body {
   overflow: hidden;
 }
 
+html {
+  /* clip (not hidden) kills stray horizontal scroll without breaking
+     position: sticky / ScrollTrigger pins used on desktop */
+  overflow-x: clip;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-text-primary);
