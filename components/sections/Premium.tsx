@@ -74,7 +74,6 @@ export default function Premium() {
           {/* scrolling feature blocks */}
           <div className="flex flex-col justify-center gap-[12vh] py-24 lg:gap-[55vh] lg:py-[40vh]">
             <div>
-              <p className="label mb-4 text-xs text-primary-light">05 — Premium Experience</p>
               <SplitHeading
                 as="h2"
                 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"

@@ -283,7 +283,6 @@ export default function AppShowcase() {
 
         {/* copy + features */}
         <div>
-          <p className="label mb-4 text-xs text-primary-light">03 — The App</p>
           <SplitHeading
             as="h2"
             className="font-display text-[clamp(2rem,5vw,4rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"
@@ -301,7 +300,7 @@ export default function AppShowcase() {
                   <h3 className="font-display text-xl font-bold uppercase tracking-[0.045em]">
                     {f.title}
                   </h3>
-                  <p className="mt-2 max-w-md text-sm text-text-secondary">{f.body}</p>
+                  <p className="mt-2 max-w-md text-base text-text-secondary">{f.body}</p>
                 </div>
               </li>
             ))}

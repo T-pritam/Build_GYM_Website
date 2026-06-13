@@ -8,7 +8,7 @@ const INTERESTS = ["Membership", "Trial Session", "Personal Training", "Other"] 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
 const inputClass =
-  "w-full rounded-xl border border-border-base bg-background-alt px-4 py-3.5 text-sm text-text-primary placeholder:text-text-dim transition-shadow focus:border-primary-neon focus:shadow-[0_0_0_1px_var(--color-primary-neon),0_0_24px_-8px_var(--color-primary-neon-glow)] focus:outline-none";
+  "w-full rounded-xl border border-border-base bg-background-alt px-4 py-3.5 text-base text-text-primary placeholder:text-text-dim transition-shadow focus:border-primary-neon focus:shadow-[0_0_0_1px_var(--color-primary-neon),0_0_24px_-8px_var(--color-primary-neon-glow)] focus:outline-none";
 
 export default function Contact() {
   const [interest, setInterest] = useState<(typeof INTERESTS)[number]>("Membership");
@@ -51,7 +51,6 @@ export default function Contact() {
         <div className="glass-card grid overflow-hidden lg:grid-cols-2">
           {/* left: details */}
           <div className="border-b border-border-base p-8 sm:p-12 lg:border-b-0 lg:border-r">
-            <p className="label mb-4 text-xs text-primary-light">07 — Contact</p>
             <SplitHeading
               as="h2"
               className="font-display text-[clamp(2rem,4.5vw,3.4rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"
@@ -61,7 +60,7 @@ export default function Contact() {
             </SplitHeading>
             <p className="tagline mt-4">the first session is on us.</p>
 
-            <dl className="mt-12 space-y-7 text-sm">
+            <dl className="mt-12 space-y-7 text-base">
               <div>
                 <dt className="label mb-1.5 text-[10px] text-text-muted">Address</dt>
                 <dd className="text-text-secondary">

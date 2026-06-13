@@ -43,7 +43,6 @@ export default function Cafe() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div>
-            <p className="label mb-4 text-xs text-primary-light">06 — In-App Café</p>
             <SplitHeading
               as="h2"
               className="font-display max-w-3xl text-[clamp(2rem,5vw,4rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"
@@ -81,7 +80,7 @@ export default function Cafe() {
               <h3 className="font-display mt-5 text-xl font-bold uppercase tracking-[0.045em]">
                 {m.name}
               </h3>
-              <p className="mt-1.5 text-sm text-text-muted">{m.macros}</p>
+              <p className="mt-1.5 text-base text-text-muted">{m.macros}</p>
               <div className="divider-sheen my-5" />
               <p className="font-display text-2xl font-extrabold">
                 <span className="text-gradient">{m.coins}</span>{" "}
@@ -91,7 +90,7 @@ export default function Cafe() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-2xl text-sm text-text-secondary">
+        <p className="mt-10 max-w-2xl text-base text-text-secondary">
           Order ahead in the app, pick a pickup slot, get notified when it&apos;s ready, and collect
           with a one-time OTP. Build Coins also pay for activities and trainer sessions.
         </p>

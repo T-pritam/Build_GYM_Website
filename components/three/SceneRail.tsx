@@ -107,7 +107,10 @@ type Pose = {
   y: number;
   s: number;
   model: ModelKey;
-  rotY: number;
+  /** continuous idle spin speed (rad/s); accumulated, never damped */
+  idleSpeed: number;
+  /** bounded scroll-mapped yaw offset; damped */
+  scrollRotY: number;
   rotX: number;
 };
 
@@ -116,6 +119,10 @@ function Traveler() {
   const dumbbellRef = useRef<THREE.Group>(null);
   const kettlebellRef = useRef<THREE.Group>(null);
   const platesRef = useRef<THREE.Group>(null);
+  // yaw is split so it can never "unwind": idleSpin accumulates monotonically
+  // (never a damp target), scrollRot is a small bounded, damped offset.
+  const idleSpin = useRef(0);
+  const scrollRot = useRef(0);
   const { viewport, size } = useThree();
 
   useFrame((state, delta) => {
@@ -133,7 +140,8 @@ function Traveler() {
       y: -vh * 0.37 + Math.sin(t * 0.9) * 0.06,
       s: desktop ? 0.22 : 0.17,
       model,
-      rotY: t * 0.45,
+      idleSpeed: 0.45,
+      scrollRotY: 0,
       rotX: 0.25,
     });
 
@@ -146,20 +154,22 @@ function Traveler() {
         y: Math.sin(t * 0.7) * 0.1 - vh * 0.37 * p,
         s: 1 - 0.78 * p,
         model: "dumbbell",
-        rotY: t * 0.28 + p * Math.PI * 1.6,
+        idleSpeed: 0.28,
+        scrollRotY: p * Math.PI * 1.6,
         rotX: 0.12 + state.pointer.y * -0.18 * (1 - p),
       };
     } else if (b.premium <= 0) {
       pose = dock("dumbbell");
     } else if (b.premium < 1) {
-      // premium: beside the feature blocks, new angle per block
+      // premium: beside the feature blocks, scroll turns it through ~1 rev
       const p = b.premium;
       pose = {
         x: desktop ? -vw * 0.25 : vw * 0.2,
         y: desktop ? Math.sin(t * 0.6) * 0.07 : vh * 0.27,
         s: desktop ? 0.85 : 0.5,
         model: "kettlebell",
-        rotY: 0.4 + p * Math.PI * 2.2,
+        idleSpeed: 0, // purely scroll-driven turning
+        scrollRotY: 0.4 + p * Math.PI * 2.2,
         rotX: 0.08 + Math.sin(p * Math.PI * 3) * 0.22,
       };
     } else if (b.membership <= 0) {
@@ -173,7 +183,8 @@ function Traveler() {
         y: vh * 0.24,
         s: (desktop ? 0.52 : 0.34) * fade,
         model: "plates",
-        rotY: t * 0.3,
+        idleSpeed: 0.3,
+        scrollRotY: 0,
         rotX: 0.2,
       };
     } else {
@@ -182,7 +193,13 @@ function Traveler() {
 
     easing.damp3(g.position, [pose.x, pose.y, 0], 0.5, delta);
     easing.damp3(g.scale, [Math.max(pose.s, 0.001), Math.max(pose.s, 0.001), Math.max(pose.s, 0.001)], 0.45, delta);
-    easing.damp(g.rotation, "y", pose.rotY, 0.35, delta);
+
+    // yaw: accumulate idle spin (bounded delta so a backgrounded tab can't
+    // jump it), add a damped, bounded scroll offset — no unwinding ever.
+    idleSpin.current += Math.min(delta, 0.05) * pose.idleSpeed;
+    easing.damp(scrollRot, "current", pose.scrollRotY, 0.35, delta);
+    g.rotation.y = idleSpin.current + scrollRot.current;
+
     easing.damp(g.rotation, "x", pose.rotX, 0.35, delta);
     easing.damp(g.rotation, "z", b.hero < 1 ? state.pointer.x * 0.14 * (1 - b.hero) : 0, 0.4, delta);
 

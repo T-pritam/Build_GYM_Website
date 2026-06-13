@@ -48,7 +48,6 @@ export default function Activities() {
   return (
     <section ref={section} id="activities" className="relative py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <p className="label mb-4 text-xs text-primary-light">04 — Activities</p>
         <SplitHeading
           as="h2"
           className="font-display max-w-4xl text-[clamp(2rem,5vw,4rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"

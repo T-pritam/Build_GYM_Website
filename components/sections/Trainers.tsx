@@ -148,7 +148,6 @@ export default function Trainers() {
 
       <div className="flex min-h-0 flex-col justify-center lg:h-screen">
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
-          <p className="label mb-4 text-xs text-primary-light">02 — The Team</p>
           <SplitHeading
             as="h2"
             className="font-display max-w-4xl text-[clamp(2rem,5vw,4rem)] font-bold uppercase leading-[1.05] tracking-[0.05em]"
@@ -200,7 +199,7 @@ export default function Trainers() {
                 <h3 className="font-display mt-5 text-2xl font-bold uppercase tracking-[0.045em]">
                   {t.name}
                 </h3>
-                <p className="mt-1 text-sm text-text-muted">{t.certs}</p>
+                <p className="mt-1 text-base text-text-muted">{t.certs}</p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   {t.chips.map((c) => (
@@ -220,7 +219,7 @@ export default function Trainers() {
               <p className="font-display text-2xl font-bold uppercase leading-snug tracking-[0.045em]">
                 Train with any of them — <span className="text-gradient">free</span>.
               </p>
-              <p className="text-sm text-text-secondary">
+              <p className="text-base text-text-secondary">
                 New members can book a free trial session with any trainer before committing.
               </p>
               <MagneticButton>
