@@ -192,13 +192,11 @@ function Traveler() {
       pose = { ...dock("plates"), s: 0 };
     }
 
-    // Mobile: the traveler is the hero piece only. A narrow screen has no
-    // side-column room, so once the hero is passed we retire the object
-    // (ambient dust stays) — guarantees text legibility and lightens phone
-    // GPU. Desktop keeps the full cross-section handoff untouched.
-    if (!desktop && b.hero >= 1) {
-      pose.s = 0;
-    }
+    // Mobile keeps the full cross-section handoff too (kettlebell at Premium,
+    // plates at Membership). The canvas sits behind the content (z-0 under the
+    // z-10 main), so the traveler reads as a moving glow behind the copy as it
+    // animates with scroll; the mobile poses above are already scaled down and
+    // shifted toward the edge vs desktop to stay clear of the headings.
 
     easing.damp3(g.position, [pose.x, pose.y, 0], 0.5, delta);
     easing.damp3(g.scale, [Math.max(pose.s, 0.001), Math.max(pose.s, 0.001), Math.max(pose.s, 0.001)], 0.45, delta);
